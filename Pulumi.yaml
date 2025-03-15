@@ -1,0 +1,7 @@
+name: miguelgo
+description: se crea un proyecto
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-go
