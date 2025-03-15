@@ -1,0 +1,111 @@
+# Pulumi AWS S3 Bucket con Go
+
+Este proyecto usa **Pulumi** para crear un bucket S3 en AWS utilizando el lenguaje **Go**.
+
+## 📌 Requisitos previos
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
+
+1. **Pulumi** → [Descargar e instalar](https://www.pulumi.com/docs/install/)
+2. **AWS CLI** → [Descargar e instalar](https://aws.amazon.com/cli/)
+3. **Go (Golang)** → [Descargar e instalar](https://golang.org/doc/install)
+4. **Cuenta de AWS** con credenciales configuradas:
+   ```sh
+   aws configure
+   ```
+
+## 🚀 Pasos para construir el bucket
+
+### 1️⃣ Inicializar el proyecto Pulumi
+Abre una terminal y navega a la carpeta donde quieres crear el proyecto:
+```sh
+cd C:\Users\Miguel\Documents\goo
+```
+Luego, inicializa un nuevo proyecto con:
+```sh
+pulumi new aws-go
+```
+Sigue las instrucciones y selecciona la región de AWS.
+
+---
+### 2️⃣ Modificar el archivo `main.go`
+Abre el archivo `main.go` y reemplázalo con el siguiente código:
+
+```go
+package main
+
+import (
+    "github.com/pulumi/pulumi-aws/sdk/v5/go/aws/s3"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+    pulumi.Run(func(ctx *pulumi.Context) error {
+        // Crear un bucket S3
+        bucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{})
+        if err != nil {
+            return err
+        }
+
+        // Exportar el nombre del bucket
+        ctx.Export("bucketName", bucket.ID())
+
+        return nil
+    })
+}
+```
+
+Guarda los cambios.
+
+---
+### 3️⃣ Instalar dependencias
+Ejecuta este comando para asegurarte de que todas las dependencias están correctamente instaladas:
+```sh
+go mod tidy
+```
+
+---
+### 4️⃣ Desplegar el bucket en AWS
+Ejecuta el siguiente comando para crear el bucket en AWS:
+```sh
+pulumi up
+```
+Pulumi mostrará los cambios y pedirá confirmación. Escribe `yes` y presiona **Enter**.
+
+---
+### 5️⃣ Verificar que el bucket se creó correctamente
+Para obtener el nombre del bucket creado, ejecuta:
+```sh
+pulumi stack output bucketName
+```
+También puedes verificarlo en la consola de AWS:
+👉 [AWS S3 Console](https://s3.console.aws.amazon.com/s3/home)
+
+---
+### 6️⃣ Subir el código a GitHub
+1. Inicializar Git en la carpeta del proyecto:
+   ```sh
+   git init
+   git add .
+   git commit -m "Proyecto Pulumi AWS S3 con Go"
+   ```
+2. Conectar con el repositorio en GitHub:
+   ```sh
+   git remote add origin https://github.com/miguel-73/migelgo.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+---
+### ✅ **Entrega**
+📌 **Comparte el enlace del repositorio:** `https://github.com/miguel-73/migelgo.git`.
+
+---
+### 🔥 **Bonus: Eliminar el bucket después de la actividad**
+Si deseas eliminar el bucket después de la actividad, usa:
+```sh
+pulumi destroy
+```
+Esto borrará el bucket en AWS.
+
+---
+🚀 **¡Listo! Has creado un bucket S3 en AWS con Pulumi y Go.** 🎉
